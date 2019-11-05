@@ -24,13 +24,13 @@ You can see how this works [here](https://github.com/aisahana/eclinic_api).
 With pip:
 
 ```
-$ pip install vuelstack
+$ pip install aisastack
 ```
 
 or manual install with clone this project:
 
 ```
-$ cd vuelstack
+$ cd aisastack
 $ python setup install
 ```
 

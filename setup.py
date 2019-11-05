@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name='aisastack',
-    version='1.0.0',
+    version='1.0.1',
     scripts=['aisvue'] ,
     author="Aisahana",
     author_email="aisahana.business@gmail.com",
