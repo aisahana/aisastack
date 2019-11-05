@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+
+import os
+import json
+import argparse
+import sys
+import requests as req
+import ui
+from pyfiglet import Figlet
+import subprocess
+
+from builders.blight import blight_clone, blight_build
+
+
+__VERSION__ = '1.0.0'
+
+
+# Clone
+def git(*args):
+    return subprocess.check_call(['git'] + list(args))
+
+
+def get_package():
+    # Open file json
+    with open('package.json', 'r') as data:
+        package = json.loads(data.read())
+        return package
+
+
+def start():
+    package = get_package()
+    custom_fig = Figlet(font='standard')
+    print(custom_fig.renderText(f'AisaStack - {__VERSION__}'))
+    # # coloring:
+    ui.info(ui.blue, f"{package.get('name')}",
+            ui.reset, ui.yellow, f'{package.get("version")}')
+    print('')
+
+
+def controller(args):
+    router = {
+        'blight': [blight_build, blight_clone]
+    }
+
+    if router.get(args.clone):
+        router.get(args.clone)[1](git)
+
+    elif args.build:
+        start()
+        package = get_package()
+        router.get(package.get('aisastack').get('name'))[0](package)
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--clone', action='store', type=str)
+    parser.add_argument('--build', action='store', type=str)
+    args = parser.parse_args()
+    controller(args)
+
+if __name__ == '__main__':
+    main()
+
+
+
